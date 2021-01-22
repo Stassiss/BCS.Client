@@ -1,0 +1,18 @@
+﻿
+<div style="justify-items:center;align-content:center;">
+    @foreach (var project in ProjectsList)
+    {
+        <div>
+            @project.Id
+            @project.Title
+            @project.Description
+            @project.DatePosted
+        </div>
+    }
+</div>
+
+
+
+@code {
+    [Parameter] public List<ProjectOutDto> ProjectsList { get; set; }
+}
