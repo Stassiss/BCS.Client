@@ -1,0 +1,47 @@
+﻿
+
+<InputFile OnChange="HandleFileInput" multiple />
+
+@if (ImageDataUris.Count > 0)
+{
+    <h4>Images</h4>
+
+    <div>
+        <div class="card-body">
+            @foreach (var imageDataUri in ImageDataUris)
+            {
+                <img src="@imageDataUri" />
+            }
+        </div>
+    </div>
+}
+@code {
+    [Parameter] public EventCallback<List<ImageDto>> OnImageSelected { get; set; }
+    private List<string> ImageDataUris = new List<string>();
+    private List<ImageDto> Images = new List<ImageDto>();
+    private async Task HandleFileInput(InputFileChangeEventArgs files)
+    {
+        var maxAllowedFiles = 10;
+        long maxFileSize = 1024 * 1024 * 15;
+
+        foreach (var imageFile in files.GetMultipleFiles(maxAllowedFiles))
+        {
+            var format = Path.GetExtension(imageFile.Name);
+            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 300, 169);
+            using var fileStream = resizedImageFile.OpenReadStream(maxFileSize);
+            using var memoryStream = new MemoryStream();
+            await fileStream.CopyToAsync(memoryStream);
+            var imageDataUri = $"data:{format};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
+
+            ImageDataUris.Add(imageDataUri);
+            Images.Add(new ImageDto
+            {
+                Data = memoryStream.ToArray(),
+                FileType = format,
+                FileSize = imageFile.Size
+            });
+
+        }
+        await OnImageSelected.InvokeAsync(Images);
+    }
+}

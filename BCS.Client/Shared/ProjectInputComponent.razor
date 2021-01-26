@@ -1,0 +1,34 @@
+﻿
+
+
+
+
+<section id="admin">
+    <div class="container-fluid">
+
+        <EditForm Model="Project" OnValidSubmit="OnValidSubmit" method="post" enctype="multipart/form-data">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <h3>Title</h3>
+                <InputText type="text" @bind-Value="@Project.Title" class="form-control" name="title" placeholder="Obligāti jānorāda!" />
+                <ValidationMessage For="@(()=>Project.Title)" />
+                <h3>Description</h3>
+                <InputTextArea @bind-Value="@Project.Description" name="description" class="form-control" cols="30" rows="10"></InputTextArea>
+                <ValidationMessage For="@(()=>Project.Description)" />
+            </div>
+
+            <ProjectImgInput OnImageSelected="OnImageSelected" />
+            <button type="submit" class="btn btn-primary">Publish</button>
+        </EditForm>
+    </div>
+</section>
+
+
+@code {
+    [Parameter] public ProjectInputDto Project { get; set; }
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+    [Parameter] public EventCallback<List<ImageDto>> OnImageSelected { get; set; }
+
+
+
+}

@@ -1,18 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace BCS.Client.DTOs
 {
-    public class ProjectOutDto
+    public class ProjectInputDto
     {
-        public Guid Id { get; set; }
+        [Required]
         public string Title { get; set; }
+        [Required]
         public string Description { get; set; }
-
-        public string FirstImagePath { get; set; }
-        public DateTime DatePosted { get; set; }
-        public DateTime LastModified { get; set; }
     }
 }

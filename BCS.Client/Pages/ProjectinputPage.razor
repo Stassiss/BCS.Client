@@ -1,0 +1,31 @@
+﻿@page "/createproject"
+@inject IProjectRepository _projectRepository;
+@inject IImageRepository _imageRepository;
+
+<ProjectInputComponent Project="Project" OnValidSubmit="CreateProject" OnImageSelected="OnImageSelected" />
+@code {
+    private ProjectInputDto Project;
+    private List<ImageDto> imagesList;
+
+
+    protected override void OnInitialized()
+    {
+        Project = new ProjectInputDto();
+    }
+    private async Task CreateProject()
+    {
+
+        var projectOutDto = await _projectRepository.CreateProject(Project);
+        if (projectOutDto != null && imagesList.Count != 0)
+        {
+            await _imageRepository.UploadImages(imagesList, projectOutDto.Id);
+
+        }
+
+    }
+
+    private async Task OnImageSelected(List<ImageDto> images)
+    {
+        imagesList = images;
+    }
+}

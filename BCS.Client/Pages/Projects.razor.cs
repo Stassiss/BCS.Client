@@ -13,15 +13,24 @@ namespace BCS.Client.Pages
     {
         public List<ProjectOutDto> ProjectsList { get; set; } = new List<ProjectOutDto>();
         public MetaData MetaData { get; set; }
-        private ProjectParameters _projectParameters = new ProjectParameters { PageSize = 3 };
+        private ProjectParameters _projectParameters = new ProjectParameters();
         [Inject]
         public IProjectRepository _projectRepository { get; set; }
         protected async override Task OnInitializedAsync()
         {
+            await GetProjects();
+        }
+        private async Task SelectedPage(int page)
+        {
+            _projectParameters.PageNumber = page;
+            await GetProjects();
+        }
+        private async Task GetProjects()
+        {
+
             var paginationResponse = await _projectRepository.GetProjects(_projectParameters);
             MetaData = paginationResponse.MetaData;
             ProjectsList = paginationResponse.Items;
         }
-
     }
 }

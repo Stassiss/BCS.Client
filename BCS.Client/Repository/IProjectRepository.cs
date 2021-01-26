@@ -10,6 +10,7 @@ namespace BCS.Client.Repository
 {
     public interface IProjectRepository
     {
+        Task<ProjectOutDto> CreateProject(ProjectInputDto project);
         Task<PaginationResponse<ProjectOutDto>> GetProjects(ProjectParameters projectParameters);
     }
 }

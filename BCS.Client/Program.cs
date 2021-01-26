@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using BCS.Client.Helpers;
 using BCS.Client.Repository;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +28,8 @@ namespace BCS.Client
         private static void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IProjectRepository, ProjectRepository>();
+            services.AddScoped<IImageRepository, ImageRepository>();
+            services.AddScoped<IHttpService, HttpService>();
         }
     }
 }
