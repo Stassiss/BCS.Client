@@ -1,33 +1,46 @@
 ﻿
 
+<style>
+    .input-background {
+        background-color: rgba(238, 160, 37, 0.20);
+    }
+</style>
 
 
 
-<section id="admin">
-    <div class="container-fluid">
+<div class="container-fluid">
 
-        <EditForm Model="Project" OnValidSubmit="OnValidSubmit" method="post" enctype="multipart/form-data">
-            <DataAnnotationsValidator />
-            <div class="form-group">
-                <h3>Title</h3>
-                <InputText type="text" @bind-Value="@Project.Title" class="form-control" name="title" placeholder="Obligāti jānorāda!" />
-                <ValidationMessage For="@(()=>Project.Title)" />
-                <h3>Description</h3>
-                <InputTextArea @bind-Value="@Project.Description" name="description" class="form-control" cols="30" rows="10"></InputTextArea>
-                <ValidationMessage For="@(()=>Project.Description)" />
-            </div>
+    <EditForm Model="Project" OnValidSubmit="OnValidSubmit" method="post" enctype="multipart/form-data">
+        <DataAnnotationsValidator />
+        <div class="form-group">
+            <h3>Title</h3>
+            <InputText type="text" @bind-Value="@Project.Title" class="form-control input-background" name="title" placeholder="Obligāti jānorāda!" />
+            <ValidationMessage For="@(()=>Project.Title)" />
+            <h3>Description</h3>
+            <InputTextArea @bind-Value="@Project.Description" name="description" class="form-control input-background" cols="30" rows="10" placeholder="Jānorāda!"></InputTextArea>
+            <ValidationMessage For="@(()=>Project.Description)" />
+        </div>
+        <button type="submit" class="btn btn-primary">Publish</button>
 
-            <ProjectImgInput OnImageSelected="OnImageSelected" />
-            <button type="submit" class="btn btn-primary">Publish</button>
-        </EditForm>
-    </div>
-</section>
+        <ProjectImgInput OnImageSelected="OnImageSelected" />
+        <ValidationMessage For="(()=>Project.Images)" />
+    </EditForm>
+</div>
+
 
 
 @code {
     [Parameter] public ProjectInputDto Project { get; set; }
     [Parameter] public EventCallback OnValidSubmit { get; set; }
-    [Parameter] public EventCallback<List<ImageDto>> OnImageSelected { get; set; }
+
+    private void OnImageSelected(List<ImageDto> images)
+    {
+        if (images.Count != 0)
+        {
+            Project.Images = images;
+
+        }
+    }
 
 
 

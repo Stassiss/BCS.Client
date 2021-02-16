@@ -32,29 +32,39 @@ namespace BCS.Client.Repository
 
         }
 
+        public async Task<bool> DeleteProject(ProjectOutDto project)
+        {
+            var response = await _httpService.Delete($"projects/{project.Id}");
+            return response.Success;
+        }
+
+        public async Task<ProjectOutDto> GetProject(Guid projectId)
+        {
+            var httpresponse = await _httpService.Get<ProjectOutDto>($"projects/{projectId}");
+            if (!httpresponse.Success)
+            {
+                throw new ApplicationException();
+            }
+            return httpresponse.Data;
+        }
+
+        public async Task<PaginationResponse<ProjectOutDto>> GetProjects(ProjectParameters projectParameters)
+        {
+            var queryString = new Dictionary<string, string>
+            {
+                ["pageNumber"] = projectParameters.PageNumber.ToString(),
+                ["pageSize"] = projectParameters.PageSize.ToString()
+            };
+            var httpResponse = await _httpService.Get<List<ProjectOutDto>>(QueryHelpers.AddQueryString("projects", queryString));
 
 
-        //public async Task<PaginationResponse<ProjectOutDto>> GetProjects(ProjectParameters projectParameters)
-        //{
-        //    var queryString = new Dictionary<string, string>
-        //    {
-        //        ["pageNumber"] = projectParameters.PageNumber.ToString(),
-        //        ["pageSize"] = projectParameters.PageSize.ToString()
-        //    };
-        //    var response = await _httpClient.GetAsync(QueryHelpers.AddQueryString("projects", queryString));
-        //    var content = await response.Content.ReadAsStringAsync();
-        //    if (!response.IsSuccessStatusCode)
-        //    {
-        //        throw new ApplicationException(content);
-        //    }
-
-        //    var paginationResponse = new PaginationResponse<ProjectOutDto>
-        //    {
-        //        Items = JsonSerializer.Deserialize<List<ProjectOutDto>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true }),
-        //        MetaData = JsonSerializer.Deserialize<MetaData>(response.Headers.GetValues("x-pagination").First(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
-        //    };
-        //    return paginationResponse;
-        //}
+            var paginationResponse = new PaginationResponse<ProjectOutDto>
+            {
+                Items = httpResponse.Data,
+                MetaData = JsonSerializer.Deserialize<MetaData>(httpResponse.HttpResponseMessage.Headers.GetValues("x-pagination").First(), new JsonSerializerOptions { PropertyNameCaseInsensitive = true })
+            };
+            return paginationResponse;
+        }
 
     }
 

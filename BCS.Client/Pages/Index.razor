@@ -1,4 +1,53 @@
 ﻿@page "/"
 
+<div class="container">
+    <div class="col">
+        @if (ShitList != null)
+        {
+            @foreach (var shit in ShitList)
+            {
+                <div class="">
+                    @shit.Age
+                    <br />
+                    @shit.IsShit <span><input type="radio" name="isshit" @onchange="(()=>SetPicture(shit))" /> SetPicture tu true</span>
+                </div>
+            }
+        }
+
+    </div>
+    <button @onclick="LoadList">click</button>
+</div>
+
+@code {
+    private Shit shit = new();
+    private List<Shit> ShitList;
+
+    private void LoadList()
+    {
+        ShitList = new List<Shit>
+{
+                 new Shit { Age = 1,IsShit=false},
+                 new Shit { Age = 2,IsShit=false},
+                 new Shit { Age = 3,IsShit=false},
+                 new Shit { Age = 4,IsShit=false},
+                 new Shit { Age = 5,IsShit=false}
+        };
+    }
+    private void SetPicture(Shit shit)
+    {
+        foreach (var shitso in ShitList)
+        {
+            shitso.IsShit = false;
+        }
+        var shitToChange = ShitList.Find(c => c == shit);
+        shitToChange.IsShit = true;
+        StateHasChanged();
+    }
+    class Shit
+    {
+        public int Age { get; set; }
+        public bool IsShit { get; set; }
+    }
 
 
+}

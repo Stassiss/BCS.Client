@@ -42,14 +42,34 @@ namespace BCS.Client.Helpers
 
             }
         }
+
+
+        public async Task<HttpResponseWraper<T>> Get<T>(string url)
+        {
+            var httpResponse = await _httpClient.GetAsync(url);
+            if (httpResponse.IsSuccessStatusCode)
+            {
+                var response = await Deserialize<T>(httpResponse, defaultJsonSerializerOptions);
+                return new HttpResponseWraper<T>(response, httpResponse.IsSuccessStatusCode, httpResponse);
+            }
+            else
+            {
+                return new HttpResponseWraper<T>(default, false, httpResponse);
+            }
+        }
+
+        public async Task<HttpResponseWraper<object>> Delete(string url)
+        {
+            var httpResponse = await _httpClient.DeleteAsync(url);
+            return new HttpResponseWraper<object>(null, httpResponse.IsSuccessStatusCode, httpResponse);
+        }
+
+        private JsonSerializerOptions defaultJsonSerializerOptions =>
+            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
         private async Task<T> Deserialize<T>(HttpResponseMessage httpResponseMessage, JsonSerializerOptions options)
         {
             var responseString = await httpResponseMessage.Content.ReadAsStringAsync();
             return JsonSerializer.Deserialize<T>(responseString, defaultJsonSerializerOptions);
         }
-
-        private JsonSerializerOptions defaultJsonSerializerOptions =>
-            new JsonSerializerOptions() { PropertyNameCaseInsensitive = true };
-
     }
 }

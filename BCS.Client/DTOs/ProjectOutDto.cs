@@ -12,7 +12,9 @@ namespace BCS.Client.DTOs
         public string Description { get; set; }
 
         public string FirstImagePath { get; set; }
+        public byte[] FirstImageData { get; set; }
         public DateTime DatePosted { get; set; }
         public DateTime LastModified { get; set; }
+        public List<ImageOutDto> Images { get; set; }
     }
 }

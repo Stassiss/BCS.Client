@@ -1,0 +1,28 @@
+﻿@page "/projects/{ProjectId:guid}";
+@inject IProjectRepository _projectRepository;
+
+@if (Project != null)
+{
+    <h1>@Project.Title</h1>
+    <ProjectImgGallery Images="Images" />
+}
+else
+{
+    <p> Loading...</p>
+}
+
+@code {
+    [Parameter] public Guid ProjectId { get; set; }
+
+    private ProjectOutDto Project;
+    private List<ImageOutDto> Images;
+
+    protected async override Task OnInitializedAsync()
+    {
+        Project = await _projectRepository.GetProject(ProjectId);
+
+        Images = Project.Images;
+
+    }
+
+}

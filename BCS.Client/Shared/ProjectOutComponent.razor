@@ -1,33 +1,26 @@
-﻿
+﻿@using BCS.Client.Features;
+
 <style>
     .box-background {
-        background-color: rgba(225, 235, 186, 0.20);
+        display: inline-block;
+        background-color: rgba(225, 235, 186, 0.50);
         justify-items: center;
         align-content: center;
         width: 90%;
         height: 90%;
         padding: 20px
     }
-
-    .card-size {
-        width: 200px;
-        height: 200px;
-        margin: 10px;
-        padding: 10px;
-    }
 </style>
 <div class="box-background">
     <div class="row">
         @foreach (var project in ProjectsList)
         {
-            <div class="col-lg-4">
-                <div @key="project.Id" class="card-size">
-                    <h1>@project.Title</h1>
-                </div>
-            </div>
 
+            <ProjectCard Project="project" DeleteProject="DeleteProject" />
         }
     </div>
+
+    <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
 </div>
 
 
@@ -35,4 +28,8 @@
 
 @code {
     [Parameter] public List<ProjectOutDto> ProjectsList { get; set; }
+    [Parameter] public MetaData MetaData { get; set; }
+    [Parameter] public EventCallback<int> SelectedPage { get; set; }
+    [Parameter] public EventCallback<ProjectOutDto> DeleteProject { get; set; }
+
 }

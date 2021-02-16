@@ -1,11 +1,15 @@
 ﻿@page "/createproject"
 @inject IProjectRepository _projectRepository;
 @inject IImageRepository _imageRepository;
-
-<ProjectInputComponent Project="Project" OnValidSubmit="CreateProject" OnImageSelected="OnImageSelected" />
+@inject NavigationManager _navigationManager;
+<div class="container-fluid">
+    <div class="text-center mt-5">
+        <h2>Add new Project</h2>
+    </div>
+    <ProjectInputComponent Project="Project" OnValidSubmit="CreateProject" />
+</div>
 @code {
     private ProjectInputDto Project;
-    private List<ImageDto> imagesList;
 
 
     protected override void OnInitialized()
@@ -14,18 +18,11 @@
     }
     private async Task CreateProject()
     {
-
         var projectOutDto = await _projectRepository.CreateProject(Project);
-        if (projectOutDto != null && imagesList.Count != 0)
+        if (projectOutDto != null)
         {
-            await _imageRepository.UploadImages(imagesList, projectOutDto.Id);
-
+            _navigationManager.NavigateTo("/projects");
         }
 
-    }
-
-    private async Task OnImageSelected(List<ImageDto> images)
-    {
-        imagesList = images;
     }
 }

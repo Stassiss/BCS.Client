@@ -1,47 +1,89 @@
 ﻿
 
-<InputFile OnChange="HandleFileInput" multiple />
 
-@if (ImageDataUris.Count > 0)
+<style>
+
+    .img-preview {
+        position: relative;
+        display: inline-block;
+        background-color: rgba(238, 160, 37, 0.53);
+        padding: 10px;
+        margin: 10px;
+        text-align: center;
+        align-content: center;
+        justify-items: center;
+        width: 100%;
+    }
+
+        .img-preview .row {
+            margin: auto auto;
+        }
+
+    .btn-position {
+        position: absolute;
+        top: 2px;
+        right: 2px;
+    }
+
+    .img-size {
+        max-height: 250px;
+        max-width: 250px;
+        margin: 10px;
+    }
+</style>
+<FileInput OnPreviewSelected="SelectFilePreview" /><span>Images selected: @selectedFileCount</span>
+@if (PreviewFiles.Count > 0)
 {
-    <h4>Images</h4>
 
-    <div>
-        <div class="card-body">
-            @foreach (var imageDataUri in ImageDataUris)
+    <div class="img-preview">
+        <h4>Image Preview</h4>
+
+        <div class="row ">
+            @foreach (var file in PreviewFiles)
             {
-                <img src="@imageDataUri" />
+                <div style="position:relative">
+                    <img src="@file.ImageDataUri" class="img-size" />
+                    <br />
+                    <input type="radio" name="selectFirstImage" value="@file.Image.IsFirstImage" @onchange="(()=>SetFirstImage(file.Image))" /> <span>Set first image</span>
+                    <button @onclick="(()=>DeleteImage(file))" type="button" class="btn btn-position">X</button>
+                </div>
             }
         </div>
     </div>
 }
+
+
+
+
 @code {
     [Parameter] public EventCallback<List<ImageDto>> OnImageSelected { get; set; }
-    private List<string> ImageDataUris = new List<string>();
+    private List<UploadFileDto> PreviewFiles = new List<UploadFileDto>();
     private List<ImageDto> Images = new List<ImageDto>();
-    private async Task HandleFileInput(InputFileChangeEventArgs files)
+    private int selectedFileCount = 0;
+
+    private void DeleteImage(UploadFileDto file)
     {
-        var maxAllowedFiles = 10;
-        long maxFileSize = 1024 * 1024 * 15;
-
-        foreach (var imageFile in files.GetMultipleFiles(maxAllowedFiles))
-        {
-            var format = Path.GetExtension(imageFile.Name);
-            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 300, 169);
-            using var fileStream = resizedImageFile.OpenReadStream(maxFileSize);
-            using var memoryStream = new MemoryStream();
-            await fileStream.CopyToAsync(memoryStream);
-            var imageDataUri = $"data:{format};base64,{Convert.ToBase64String(memoryStream.ToArray())}";
-
-            ImageDataUris.Add(imageDataUri);
-            Images.Add(new ImageDto
-            {
-                Data = memoryStream.ToArray(),
-                FileType = format,
-                FileSize = imageFile.Size
-            });
-
-        }
+        Images.Remove(file.Image);
+        PreviewFiles.Remove(file);
+        selectedFileCount = Images.Count;
+        StateHasChanged();
+    }
+    private async Task SelectFilePreview(List<UploadFileDto> previewFiles)
+    {
+        PreviewFiles = previewFiles;
+        Images = previewFiles.Select(x => x.Image).ToList();
+        selectedFileCount = Images.Count;
         await OnImageSelected.InvokeAsync(Images);
     }
+    private void SetFirstImage(ImageDto image)
+    {
+        foreach (var img in Images)
+        {
+            img.IsFirstImage = false;
+        }
+        var imageToSet = Images.Find(img => img == image);
+        imageToSet.IsFirstImage = true;
+        StateHasChanged();
+    }
+
 }

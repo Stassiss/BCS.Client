@@ -12,5 +12,7 @@ namespace BCS.Client.Repository
     {
         Task<ProjectOutDto> CreateProject(ProjectInputDto project);
         Task<PaginationResponse<ProjectOutDto>> GetProjects(ProjectParameters projectParameters);
+        Task<bool> DeleteProject(ProjectOutDto project);
+        Task<ProjectOutDto> GetProject(Guid projectId);
     }
 }

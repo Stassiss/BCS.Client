@@ -9,5 +9,9 @@ namespace BCS.Client.Helpers
     {
         Task<HttpResponseWraper<object>> Post<T>(string url, T data);
         Task<HttpResponseWraper<TResponse>> Post<T, TResponse>(string url, T data);
+
+        Task<HttpResponseWraper<T>> Get<T>(string url);
+
+        Task<HttpResponseWraper<object>> Delete(string url);
     }
 }

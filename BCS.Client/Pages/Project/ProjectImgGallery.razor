@@ -1,0 +1,53 @@
+﻿
+
+<style>
+    div.gallery {
+        border: 1px solid #ccc;
+        position: relative;
+        margin-top: 10px;
+    }
+
+        div.gallery:hover {
+            border: 1px solid #777;
+        }
+
+        div.gallery img {
+            width: 100%;
+            height: auto;
+        }
+</style>
+
+<div class="text-center align-content-center">
+    <h3>ProjectImgGallery</h3>
+    @if (Images != null)
+    {
+        <div class="row">
+            @foreach (var image in Images)
+            {
+                @if (image.ImageData != null)
+                {
+                    <div class="gallery">
+                        <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.ImageData)" alt="Image">
+                    </div>
+                }
+                else
+                {
+                    <div class="gallery">
+                        <img src="/Images/cranebackground.jpg" alt="Image">
+                    </div>
+
+                }
+
+            }
+        </div>
+    }
+    else
+    {
+        <p>Loading...</p>
+    }
+</div>
+
+@code {
+    [Parameter] public List<ImageOutDto> Images { get; set; }
+
+}

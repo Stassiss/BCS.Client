@@ -1,0 +1,19 @@
+﻿@page "/projects"
+
+@if (ProjectsList != null)
+{
+    if (ProjectsList.Count > 0)
+    {
+        <ProjectOutComponent ProjectsList="ProjectsList" MetaData="MetaData" SelectedPage="SelectedPage" DeleteProject="DeleteProject" />
+
+    }
+    else
+    {
+        <p>Nothing to show</p>
+    }
+
+}
+else
+{
+    <p>Loading...</p>
+}

@@ -21,11 +21,11 @@ namespace BCS.Client.Shared
         protected override void OnParametersSet()
         {
             CreatePaginationLinks();
+
         }
 
         private void CreatePaginationLinks()
         {
-
             _links = new List<PagingLink>();
             _links.Add(new PagingLink("Back", MetaData.CurrentPage - 1, MetaData.HasPrevious));
             for (int i = 1; i <= MetaData.TotalPages; i++)
