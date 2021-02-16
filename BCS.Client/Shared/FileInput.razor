@@ -44,6 +44,8 @@
 
             PreviewFiles.Add(uploadFileDto);
         }
+        //Set first image as isFirstImage =true
+        PreviewFiles[0].Image.IsFirstImage = true;
         await OnPreviewSelected.InvokeAsync(PreviewFiles);
     }
 

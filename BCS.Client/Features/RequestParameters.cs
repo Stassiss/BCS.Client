@@ -10,7 +10,7 @@ namespace BCS.Client.Features
         const int maxPageSize = 10;
         public int PageNumber { get; set; } = 1;
 
-        private int _pageSize = 9;
+        private int _pageSize = 4;
         public int PageSize
         {
             get

@@ -8,14 +8,14 @@
         align-content: center;
         width: 90%;
         height: 90%;
-        padding: 20px
+        padding: 20px;
+        margin-bottom: 20px;
     }
 </style>
 <div class="box-background">
     <div class="row">
         @foreach (var project in ProjectsList)
         {
-
             <ProjectCard Project="project" DeleteProject="DeleteProject" />
         }
     </div>

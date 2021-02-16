@@ -8,7 +8,6 @@ namespace BCS.Client.DTOs
     public class ImageOutDto
     {
         public Guid Id { get; set; }
-        public string ImgPath { get; set; }
         public byte[] ImageData { get; set; }
         public bool IsFirstImage { get; set; }
 
