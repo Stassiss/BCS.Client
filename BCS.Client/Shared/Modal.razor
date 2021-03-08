@@ -1,0 +1,67 @@
+﻿
+
+<div class="modal @(showFadeIn?"fadein":"fadeout") @modalClass" tabindex="-1" role="dialog" style="display:@modalDisplay; overflow-y: auto;">
+    <div class="modal-size modal-dialog" role="document">
+        <div class="modal-content">
+            @if (ShowHeader)
+            {
+                <div class="modal-header">
+                    <h5 class="modal-title">@Title</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close" @onclick="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+            }
+            <div class="modal-body">
+                @Body
+            </div>
+            @if (ShowFooter)
+            {
+                <div class="modal-footer">
+                    @Footer
+                </div>
+            }
+        </div>
+    </div>
+</div>
+
+@if (showBackdrop)
+{
+    <div class="modal-backdrop fade @modalClass" style="display: @modalDisplay"></div>
+}
+
+@code {
+    [Parameter]
+    public RenderFragment Title { get; set; }
+
+    [Parameter]
+    public RenderFragment Body { get; set; }
+
+    [Parameter]
+    public RenderFragment Footer { get; set; }
+    [Parameter] public bool ShowHeader { get; set; }
+    [Parameter] public bool ShowFooter { get; set; }
+
+    private string modalDisplay = "none;";
+    private string modalClass = "";
+    private bool showBackdrop = false;
+    private bool showFadeIn = false;
+
+    public void Open()
+    {
+        showBackdrop = true;
+        showFadeIn = true;
+        modalDisplay = "block;";
+        modalClass = "show";
+    }
+
+    public async Task Close()
+    {
+        showFadeIn = false;
+        await Task.Delay(500);//Delay allows bootstrap to perform nice fade animation
+        modalClass = "";
+        modalDisplay = "none";
+        showBackdrop = false;
+
+    }
+}

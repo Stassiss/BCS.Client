@@ -1,0 +1,74 @@
+﻿<style>
+    .modal-body {
+        padding: 0;
+    }
+
+    .modal-content {
+        width: fit-content;
+        margin: auto;
+    }
+</style>
+
+<div id="modal-gallery">
+    <Modal @ref="modal" ShowFooter="false">
+        <Body>
+            <div>
+                @if (Images[index].ImageData != null)
+                {
+                    <img class="img" src="data:image/jpeg;base64,@Convert.ToBase64String(Images[index].ImageData)" alt="Image">
+                    <button type="button" class="close exit-btn-position" data-dismiss="modal" aria-label="Close" @onclick="()=>modal.Close()">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                }
+            </div>
+            <div class="nav-btn">
+                <button class=" back-btn-position" hidden="@isBackBtnDisabled" @onclick="Back">Back</button>
+                <button class=" next-btn-position" hidden="@isNextBtnDisabled" @onclick="Next">Next</button>
+            </div>
+
+
+        </Body>
+    </Modal>
+</div>
+
+
+
+@code {
+    [Parameter] public List<ImageOutDto> Images { get; set; }
+    private Modal modal { get; set; }
+    private int index = 0;
+    private bool isNextBtnDisabled;
+    private bool isBackBtnDisabled;
+    public void Open(Guid imgId)
+    {
+        index = Images.FindIndex(x => x.Id == imgId);
+        CheckButtonState();
+        modal.Open();
+    }
+    public async Task Close()
+    {
+        await modal.Close();
+    }
+    private void Next()
+    {
+        if (index < Images.Count - 1)
+        {
+            index++;
+        }
+        CheckButtonState();
+    }
+    private void Back()
+    {
+        if (index > 0)
+        {
+            index--;
+        }
+        CheckButtonState();
+    }
+    private void CheckButtonState()
+    {
+        isNextBtnDisabled = (index == Images.Count - 1) ? true : false;
+        isBackBtnDisabled = (index == 0) ? true : false;
+    }
+
+}

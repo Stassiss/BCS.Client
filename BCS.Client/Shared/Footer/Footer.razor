@@ -1,0 +1,27 @@
+﻿<style>
+    .display-footer{
+        display:@display;
+    }
+</style>
+
+<footer id="footer" class="display-footer">
+    <div class="container sticky-bottom">
+        <i class="iconPadding fab fa-twitter"></i>
+        <a href="https://www.facebook.com/BalticConstrutionSolutions" rel="noopener" target="_blank" class="iconPadding fab fa-facebook-f"></a>
+        <i class="iconPadding fab fa-instagram"></i>
+        <a href="/contacts" rel="noopener" class="iconPadding fas fa-envelope"></a>
+        <p class="footerP">© Copyright 2018 BCS</p>
+    </div>
+</footer>
+@code{
+    [Parameter] public bool IsDisplayFooter { get; set; }
+
+    private string display = "";
+    private void DisplayFooter()
+    {
+        if (!IsDisplayFooter)
+        {
+            display = "none";
+        }
+    }
+}

@@ -24,7 +24,7 @@
         foreach (var imageFile in files.GetMultipleFiles(maxAllowedFiles))
         {
             var format = Path.GetExtension(imageFile.Name);
-            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 640, 480);
+            var resizedImageFile = await imageFile.RequestImageFileAsync(format, 1000, 1000);
             using var fileStream = resizedImageFile.OpenReadStream(maxFileSize);
             using var memoryStream = new MemoryStream();
             await fileStream.CopyToAsync(memoryStream);

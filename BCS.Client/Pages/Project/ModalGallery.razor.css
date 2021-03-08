@@ -1,0 +1,51 @@
+﻿.img {
+    max-height: 100%;
+    max-width: 100%;
+}
+
+.exit-btn-position, .index-location, .back-btn-position, .next-btn-position {
+    position: absolute;
+}
+
+.exit-btn-position {
+    top: 5px;
+    right: 5px;
+}
+
+
+
+.index-location {
+    top: 5px;
+    left: 5px;
+}
+
+.nav-btn button {
+    background: none;
+    outline: none;
+    border: none;
+    color: black;
+    cursor: pointer;
+    font: inherit;
+    font-size: larger;
+    opacity: 0;
+    transition-property: all;
+    transition-duration: 0.5s;
+}
+
+    .nav-btn button:hover {
+        opacity: 1;
+        text-shadow: 2px 2px white;
+    }
+
+.back-btn-position, .next-btn-position {
+    top: 25px;
+    bottom: 25px;
+}
+
+.back-btn-position {
+    left: 5px;
+}
+
+.next-btn-position {
+    right: 5px;
+}

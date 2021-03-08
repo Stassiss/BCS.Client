@@ -1,45 +1,26 @@
 ﻿
 
-<style>
-    div.gallery {
-        border: 1px solid #ccc;
-        position: relative;
-        margin-top: 10px;
-    }
 
-        div.gallery:hover {
-            border: 1px solid #777;
-        }
-
-        div.gallery img {
-            width: 100%;
-            height: auto;
-        }
-</style>
-
-<div class="text-center align-content-center">
-    <h3>ProjectImgGallery</h3>
+<div class="container-fluid text-center">
     @if (Images != null)
     {
-        <div class="row">
+        <div id="photos">
             @foreach (var image in Images)
             {
                 @if (image.ImageData != null)
                 {
-                    <div class="gallery">
+                    <button @onclick="()=>modalGallery.Open(image.Id)">
                         <img src="data:image/jpeg;base64,@Convert.ToBase64String(image.ImageData)" alt="Image">
-                    </div>
+                    </button>
                 }
                 else
                 {
-                    <div class="gallery">
-                        <img src="/Images/cranebackground.jpg" alt="Image">
-                    </div>
-
+                    <img src="/Images/BCSLogo.jpg" alt="Image">
                 }
 
             }
         </div>
+        <ModalGallery Images="Images" @ref="modalGallery" />
     }
     else
     {
@@ -49,5 +30,6 @@
 
 @code {
     [Parameter] public List<ImageOutDto> Images { get; set; }
+    private ModalGallery modalGallery { get; set; }
 
 }

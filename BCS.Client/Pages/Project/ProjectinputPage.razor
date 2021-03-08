@@ -2,6 +2,8 @@
 @inject IProjectRepository _projectRepository;
 @inject IImageRepository _imageRepository;
 @inject NavigationManager _navigationManager;
+@attribute [Authorize]
+
 <div class="container-fluid">
     <div class="text-center mt-5">
         <h2>Add new Project</h2>

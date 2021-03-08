@@ -1,0 +1,20 @@
+﻿@page "/"
+<style>
+    .background-box h1, h2, h3 {
+        text-align: center;
+    }
+</style>
+<div id="home" class="container" style="padding-top:30px">
+    <div class="background-box">
+
+        <HomeAbout />
+        <HomeCarousel Projects="Projects" />
+
+
+    </div>
+</div>
+
+@code {
+    [Parameter] public List<ProjectOutDto> Projects { get; set; }
+
+}

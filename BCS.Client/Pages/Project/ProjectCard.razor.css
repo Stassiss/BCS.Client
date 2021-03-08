@@ -1,0 +1,35 @@
+﻿div.gallery {
+    position: relative;
+    margin-top: 10px;
+    transition:ease-in-out all 0.5s;
+}
+
+    div.gallery:hover {
+        border-radius:10px;
+        box-shadow:5px 5px,-5px 5px;
+        background-color:rgba(0, 0, 0, 0.29);
+        transform:scale(1.05);
+    }
+
+    div.gallery img {
+        width: 100%;
+        height: auto;
+        max-height: 200px;
+        border-radius:10px;
+    }
+    div.gallery a{
+        text-decoration:none;
+        transition:none;
+        cursor:pointer;
+        color:inherit;
+    }
+
+div.desc {
+    padding: 15px;
+    text-align: left;
+    overflow-wrap: break-word;
+}
+
+* {
+    box-sizing: border-box;
+}

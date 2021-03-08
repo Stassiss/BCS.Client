@@ -38,19 +38,22 @@
         display: flex;
         align-items: center;
         line-height: 3rem;
+        transition-property:all;
+        transition-duration:1s;
+        
     }
 
-.nav-item ::deep a.active {
-    background-color: rgba(255,255,255,0.25);
-    color: white;
-}
+        .nav-item ::deep a.active {
+            color: white;
+            transform:translate(50px) scale(1.2);
+        }
 
-.nav-item ::deep a:hover {
-    background-color: rgba(255,255,255,0.1);
-    color: white;
-}
+        .nav-item ::deep a:hover {
+            color: white;
+            transform: translate(50px) scale(1.2);
+        }
 
-@media (min-width: 641px) {
+@media (min-width: 846px) {
     .navbar-toggler {
         display: none;
     }

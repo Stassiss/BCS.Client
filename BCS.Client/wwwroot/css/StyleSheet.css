@@ -1,6 +1,77 @@
-﻿html,body {
+﻿html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     background-image: url(/Images/cranebackground.jpg);
-    background-size:cover;
+    background-size: cover;
+}
+.background-box {
+    position:relative;
+    padding-top: 30px;
+    padding-bottom: 30px;
+    background-color: rgba(230, 230, 250, 0.70);
+    border-radius: 10px;
+    box-shadow: 5px 5px 15px -5px rgba(0, 0, 0, 0.3);
+    margin-bottom:10px;
 }
 
+/* ABOUT US */
+.image-cont {
+    background-color: black;
+}
 
+.clearfix {
+    overflow: auto;
+    padding: 5px;
+}
+
+.right {
+    float: right;
+    margin: 25px;
+    width: 400px;
+    height: 400px;
+}
+
+.left {
+    float: left;
+    margin: 10px 25px;
+    width: 400px;
+    height: 400px;
+}
+
+.imgText {
+    padding-top: 100px;
+    align-content: center;
+}
+.aboutText h1, h2, h3 {
+    text-align: center;
+}
+/* FOOTer */
+#footer {
+    background-color: black;
+    text-align: center;
+    color: white;
+    position: absolute;
+    text-align: center;
+    bottom: 0;
+    width: 100%;
+    height: 60px;
+}
+
+    #footer a {
+        text-decoration: none;
+        color: inherit;
+        transition:ease-in-out 0.5s transform;
+    }
+
+        #footer a:hover {
+            transform:scale(2);
+            color: inherit;
+        }
+
+.iconPadding {
+    padding: 10px;
+}
+
+.footerP {
+    font-family: "Montserrat";
+    font-weight: 100;
+}

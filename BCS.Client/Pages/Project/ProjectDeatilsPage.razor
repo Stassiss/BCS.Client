@@ -1,15 +1,20 @@
 ﻿@page "/projects/{ProjectId:guid}";
 @inject IProjectRepository _projectRepository;
 
-@if (Project != null)
-{
-    <h1>@Project.Title</h1>
-    <ProjectImgGallery Images="Images" />
-}
-else
-{
-    <p> Loading...</p>
-}
+<div class="background-box container-fluid">
+    @if (Project != null)
+    {
+        <h1>@Project.Title</h1>
+        <p>
+            @Project.Description
+        </p>
+        <ProjectImgGallery Images="Images" />
+    }
+    else
+    {
+        <p> Loading...</p>
+    }
+</div>
 
 @code {
     [Parameter] public Guid ProjectId { get; set; }
